@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name_wifi">WifiPasswordViewer</string>
+    <string name="txt_security_tag">Security:</string>
+    <string name="txt_network">Network:</string>
+    <string name="txt_key">Key:</string>
+    <string name="title_activity_wifi_list">Wifi Password Viewer</string>
+    <string name="txt_password">Password: %s</string>
+    <string name="txt_copied_to_clipboard">WiFi password copied to clipboard.</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3331856249448205/7923265203</string>
+    <string name="inter_ad_unit_id">ca-app-pub-3331856249448205/1876731601</string>
+</resources>
