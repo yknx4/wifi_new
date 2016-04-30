@@ -22,6 +22,12 @@ allprojects {
         maven {
             url  "http://jcenter.bintray.com"
         }
+        maven {
+            url "https://jitpack.io"
+        }
+        maven {
+            url "https://oss.sonatype.org/content/repositories/snapshots/"
+        }
         jcenter()
         flatDir {
             dirs 'libs'
