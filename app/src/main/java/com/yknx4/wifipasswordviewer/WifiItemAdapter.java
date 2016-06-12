@@ -23,10 +23,10 @@ public class WifiItemAdapter extends RecyclerView.Adapter<WifiNetworkViewHolder>
 
     private List<WifiNetwork> objects = new ArrayList<WifiNetwork>();
 
-    private Context context;
+    private WifiListActivity context;
     private LayoutInflater layoutInflater;
 
-    public WifiItemAdapter(Context context, List<WifiNetwork> networks) {
+    public WifiItemAdapter(WifiListActivity context, List<WifiNetwork> networks) {
         this.context = context;
         this.layoutInflater = LayoutInflater.from(context);
         objects = networks;
@@ -51,6 +51,7 @@ public class WifiItemAdapter extends RecyclerView.Adapter<WifiNetworkViewHolder>
                 ClipData clip = ClipData.newPlainText(item.getName(), item.getKey());
                 clipboard.setPrimaryClip(clip);
                 Toast.makeText(context, R.string.txt_copied_to_clipboard    , Toast.LENGTH_SHORT).show();
+                context.showIntersitial();
             }
         };
         holder.networkName.setText(item.getName());

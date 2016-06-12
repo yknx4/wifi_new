@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "918850867349",
+    "firebase_url": "https://admob-app-id-6446532006.firebaseio.com",
+    "project_id": "admob-app-id-6446532006",
+    "storage_bucket": "admob-app-id-6446532006.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:918850867349:android:f834697c974d3e77",
+        "android_client_info": {
+          "package_name": "com.yknx.wifipasswordviewer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "918850867349-g7b5ebrf4u1qpuqu7eafj7sj1fdspj3f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnRrKZn7_wUiOHDM2cIDwPnA_g-XJCMG0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

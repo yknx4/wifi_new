@@ -16,7 +16,6 @@
         android:theme="@style/AppTheme"
         tools:replace="android:label"
         >
-        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".WifiListActivity"
             android:label="@string/title_activity_wifi_list"
@@ -27,7 +26,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".splash_screen"></activity>
     </application>
 
 </manifest>
