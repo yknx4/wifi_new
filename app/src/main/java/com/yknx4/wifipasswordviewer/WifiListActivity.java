@@ -4,28 +4,21 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.chrisplus.rootmanager.RootManager;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.NativeExpressAdView;
 
-
-import java.util.ArrayList;
-import java.util.List;
+import net.hockeyapp.android.CrashManager;
+import net.hockeyapp.android.UpdateManager;
 
 public class WifiListActivity extends AppCompatActivity {
 
@@ -39,7 +32,10 @@ public class WifiListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-            AsyncTask<Context,Void,WifiController> task = new AsyncTask<Context,Void,WifiController>(){
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3331856249448205~6446532006");
+
+
+        AsyncTask<Context,Void,WifiController> task = new AsyncTask<Context,Void,WifiController>(){
                 @Override
                 protected WifiController doInBackground(Context[] params) {
                     WifiController newWifiController = new WifiController(params[0]);
@@ -62,6 +58,7 @@ public class WifiListActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerView.setClickable(true);
             task.execute(this);
+            checkForCrashes();
 
 
     }
@@ -77,6 +74,34 @@ public class WifiListActivity extends AppCompatActivity {
 //        RootManager rm = RootManager.getInstance();
 //        rm.obtainPermission();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterManagers();
+
+    }
+
+    private void checkForCrashes() {
+        CrashManager.register(this);
+    }
+
+    private void checkForUpdates() {
+        // Remove this for store builds!
+
+        UpdateManager.register(this);
+    }
+
+    private void unregisterManagers() {
+        UpdateManager.unregister();
+    }
+
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        unregisterManagers();
     }
 
     @Override

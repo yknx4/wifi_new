@@ -10,6 +10,8 @@ android {
         targetSdkVersion 23
         versionCode 6
         versionName "1.1.2"
+        manifestPlaceholders = [HOCKEYAPP_APP_ID: "f759785cf6dd444f926db82ce3c3345d"]
+
     }
     buildTypes {
         release {
@@ -32,6 +34,8 @@ dependencies {
     compile 'com.google.firebase:firebase-core:9.0.2'
     compile 'com.google.firebase:firebase-ads:9.0.2'
     compile 'com.chrisplus.rootmanager:library:2.0.4@aar'
+    compile 'net.hockeyapp.android:HockeySDK:4.0.1'
+
 //    compile 'com.spazedog.lib:rootfw_gen4:1.1.0@aar'
 
 }
