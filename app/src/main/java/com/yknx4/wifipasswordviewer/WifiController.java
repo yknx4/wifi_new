@@ -1,28 +1,18 @@
 package com.yknx4.wifipasswordviewer;
 
 import android.content.Context;
-import android.location.Location;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.chrisplus.rootmanager.RootManager;
 import com.chrisplus.rootmanager.container.Result;
-import com.google.android.gms.location.places.ui.PlacePicker;
-
 import com.yknx4.wifipasswordviewer.model.WifiNetwork;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.StringReader;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Created by yknx4 on 2016. 2. 12..
