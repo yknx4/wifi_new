@@ -16,6 +16,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
@@ -59,10 +60,21 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
             protected void onPostExecute(WifiController o) {
                 super.onPostExecute(o);
                 TextView t = (TextView) findViewById(R.id.txt_loading);
-                if(t!=null) t.setVisibility(View.GONE);
-                mWifis = o;
-                adapter = new WifiItemAdapter(WifiListActivity.this, mWifis.getNetworks());
-                mRecyclerView.setAdapter(adapter);
+                if(o.isHasRoot()){
+                    if(t!=null) t.setVisibility(View.GONE);
+                    mWifis = o;
+                    adapter = new WifiItemAdapter(WifiListActivity.this, mWifis.getNetworks());
+                    mRecyclerView.setAdapter(adapter);
+                }
+                else{
+                    if(t!=null){
+                        t.setVisibility(View.GONE);
+                        t.setText(R.string.msg_no_root);
+                        Toast.makeText(WifiListActivity.this, "You don't have root or denied the access.", Toast.LENGTH_SHORT).show();
+                        showIntersitial();
+                    }
+                }
+
 
             }
         };

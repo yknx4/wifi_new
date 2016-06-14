@@ -22,6 +22,8 @@ public class WifiController {
     private static final String TAG = WifiController.class.getSimpleName();
     WeakReference<Context> context;
 
+    private boolean hasRoot;
+
     protected Context getContext() {
         return context.get();
     }
@@ -48,6 +50,7 @@ public class WifiController {
     private void loadFiles() {
         RootManager rm = RootManager.getInstance();
         if (rm.obtainPermission() && rm.hasRooted()) {
+            setHasRoot(true);
             for (String dir : Constants.CONF_FILE_DIRS) {
                 for (String file : Constants.CONF_FILE_NAMES) {
                     Log.d(TAG, "Trying to get " + dir + file);
@@ -66,6 +69,7 @@ public class WifiController {
 
             }
         } else {
+            setHasRoot(false);
 //            Toast.makeText(getContext(), "Couldn\'t get root permissions. Won\'t show anything..", Toast.LENGTH_LONG).show();
         }
     }
@@ -143,5 +147,13 @@ public class WifiController {
             Log.v(TAG, rawData);
             Log.e(TAG, "Exception: " + e.getMessage(), e);
         }
+    }
+
+    public boolean isHasRoot() {
+        return hasRoot;
+    }
+
+    public void setHasRoot(boolean hasRoot) {
+        this.hasRoot = hasRoot;
     }
 }

@@ -9,4 +9,5 @@
     <string name="banner_ad_unit_id">ca-app-pub-3331856249448205/8606172002</string>
     <string name="inter_ad_unit_id">ca-app-pub-3331856249448205/1876731601</string>
     <string name="permissions_rationale">We need this to read available networks</string>
+    <string name="msg_no_root">No root :(</string>
 </resources>
