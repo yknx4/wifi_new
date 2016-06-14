@@ -189,11 +189,11 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     private void loadAdsWithPermissions() {
         String[] perms;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN) {
-            perms = new String[]{Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE};
+            perms = new String[]{Manifest.permission.INTERNET, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE};
         }
         else
         {
-            perms = new String[]{Manifest.permission.INTERNET};
+            perms = new String[]{Manifest.permission.INTERNET, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.READ_PHONE_STATE};
         }
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Already have permission, do the thing
