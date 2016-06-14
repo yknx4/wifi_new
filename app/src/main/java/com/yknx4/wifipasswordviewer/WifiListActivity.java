@@ -68,6 +68,7 @@ public class WifiListActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getMarshmallowPermissions();
         MobileAds.initialize(getApplicationContext(), "ca-app-pub-3331856249448205~6446532006");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_list);
@@ -76,7 +77,7 @@ public class WifiListActivity extends AppCompatActivity {
         setUpAds();
         checkForCrashes();
 
-        getMarshmallowPermissions();
+
 
 //        RootManager rm = RootManager.getInstance();
 //        rm.obtainPermission();
