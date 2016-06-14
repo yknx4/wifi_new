@@ -32,6 +32,8 @@ dependencies {
     compile 'com.google.firebase:firebase-ads:9.0.2'
     compile 'com.chrisplus.rootmanager:library:2.0.4@aar'
     compile 'net.hockeyapp.android:HockeySDK:4.0.1'
+    compile 'pub.devrel:easypermissions:0.1.7'
+
 
 //    compile 'com.spazedog.lib:rootfw_gen4:1.1.0@aar'
 
