@@ -1,9 +1,12 @@
 package com.yknx4.wifipasswordviewer;
 
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -73,9 +76,26 @@ public class WifiListActivity extends AppCompatActivity {
         setUpAds();
         checkForCrashes();
 
+        getMarshmallowPermissions();
+
 //        RootManager rm = RootManager.getInstance();
 //        rm.obtainPermission();
 
+    }
+
+    private void getMarshmallowPermissions() {
+        // Here, thisActivity is the current activity
+        if (ContextCompat.checkSelfPermission(this,
+                android.Manifest.permission.INTERNET)
+                != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.INTERNET},
+                        0);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+        }
     }
 
     @Override
