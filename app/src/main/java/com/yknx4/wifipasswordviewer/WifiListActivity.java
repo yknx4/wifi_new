@@ -32,7 +32,7 @@ public class WifiListActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3331856249448205~6446532006");
+
 
 
         AsyncTask<Context,Void,WifiController> task = new AsyncTask<Context,Void,WifiController>(){
@@ -58,18 +58,20 @@ public class WifiListActivity extends AppCompatActivity {
             mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
             mRecyclerView.setClickable(true);
             task.execute(this);
-            checkForCrashes();
+
 
 
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3331856249448205~6446532006");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         setUpAds();
+        checkForCrashes();
 
 //        RootManager rm = RootManager.getInstance();
 //        rm.obtainPermission();
