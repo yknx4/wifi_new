@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.chrisplus.rootmanager.RootManager;
 import com.chrisplus.rootmanager.container.Result;
+import com.scottyab.rootbeer.RootBeer;
 import com.yknx4.wifipasswordviewer.model.WifiNetwork;
 
 import java.lang.ref.WeakReference;
@@ -48,8 +49,9 @@ public class WifiController {
     }
 
     private void loadFiles() {
+        RootBeer rootBeer = new RootBeer(context);
         RootManager rm = RootManager.getInstance();
-        if (rm.obtainPermission() && rm.hasRooted()) {
+        if (rootBeer.isRooted() && rm.obtainPermission() && rm.hasRooted()) {
             setHasRoot(true);
             for (String dir : Constants.CONF_FILE_DIRS) {
                 for (String file : Constants.CONF_FILE_NAMES) {
