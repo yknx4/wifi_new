@@ -49,8 +49,6 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     protected void onResume() {
         super.onResume();
 
-
-
         AsyncTask<Context,Void,WifiController> task = new AsyncTask<Context,Void,WifiController>(){
             @Override
             protected WifiController doInBackground(Context[] params) {
@@ -168,6 +166,7 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(Constants.DEVICE_HASH)
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .addTestDevice(getString(R.string.TABLET_TEST))
                 .build();
         adView.loadAd(adRequest);
 
@@ -175,13 +174,12 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
             @Override
             public void onAdLoaded() {
                 super.onAdLoaded();
-                adView.setVisibility(View.VISIBLE);
             }
 
             @Override
             public void onAdFailedToLoad(int i) {
                 super.onAdFailedToLoad(i);
-                adView.setVisibility(View.      GONE);
+                adView.setVisibility(View.GONE);
             }
 
         });
@@ -210,6 +208,7 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     private void requestNewInterstitial() {
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(Constants.DEVICE_HASH)
+                .addTestDevice(getString(R.string.TABLET_TEST))
                 .build();
 
         mInterstitialAd.loadAd(adRequest);

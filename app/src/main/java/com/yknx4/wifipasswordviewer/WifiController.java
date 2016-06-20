@@ -50,7 +50,7 @@ public class WifiController {
 
     private void loadFiles() {
         RootBeer rootBeer = new RootBeer(getContext());
-        if (rootBeer.isRooted() && RootFW.connect()) {
+        if (rootBeer.isRooted() && RootFW.connect() && RootFW.isRoot()) {
             setHasRoot(true);
             for (String dir : Constants.CONF_FILE_DIRS) {
                 for (String file : Constants.CONF_FILE_NAMES) {
