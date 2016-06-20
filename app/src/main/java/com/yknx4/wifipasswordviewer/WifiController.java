@@ -3,9 +3,9 @@ package com.yknx4.wifipasswordviewer;
 import android.content.Context;
 import android.util.Log;
 
-import com.chrisplus.rootmanager.RootManager;
-import com.chrisplus.rootmanager.container.Result;
 import com.scottyab.rootbeer.RootBeer;
+import com.spazedog.lib.rootfw4.RootFW;
+import com.spazedog.lib.rootfw4.Shell;
 import com.yknx4.wifipasswordviewer.model.WifiNetwork;
 
 import java.lang.ref.WeakReference;
@@ -49,9 +49,8 @@ public class WifiController {
     }
 
     private void loadFiles() {
-        RootBeer rootBeer = new RootBeer(context);
-        RootManager rm = RootManager.getInstance();
-        if (rootBeer.isRooted() && rm.obtainPermission() && rm.hasRooted()) {
+        RootBeer rootBeer = new RootBeer(getContext());
+        if (rootBeer.isRooted() && RootFW.connect()) {
             setHasRoot(true);
             for (String dir : Constants.CONF_FILE_DIRS) {
                 for (String file : Constants.CONF_FILE_NAMES) {
@@ -60,10 +59,10 @@ public class WifiController {
 
 //                Result r = rm.runCommand("cp " + dir + file + " " + getContext().getFilesDir().getAbsolutePath() + dir);
 //                rm.runCommand("chmod -R 666 " + getContext().getFilesDir().getAbsolutePath() + dir + file);
-                    Result r = rm.runCommand("cat " + dir + file);
-                    if (r.getResult() && r.getStatusCode() == 0) {
-                        String data = r.getMessage();
-                        Log.d(TAG, data);
+                    Shell.Result r = RootFW.execute("cat " + dir + file);
+                    if (r.wasSuccessful()) {
+                        String data = r.getString();
+                        Log.v(TAG, data);
                         parseFile(data);
                     }
 
@@ -102,7 +101,7 @@ public class WifiController {
         Log.v(TAG, rawData);
 //        secondParte(rawData);
         try {
-            Log.d(TAG, "Parsing: " + rawData);
+            Log.v(TAG, "Parsing: " + rawData);
 
 //            rawData = rawData.replace('$', ' ');
 //            rawData = rawData.replace("network=", "$");

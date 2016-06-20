@@ -6,8 +6,9 @@
     <string name="title_activity_wifi_list">Wifi Password Viewer</string>
     <string name="txt_password">Password: %s</string>
     <string name="txt_copied_to_clipboard">WiFi password copied to clipboard.</string>
-    <string name="banner_ad_unit_id">ca-app-pub-3331856249448205/8606172002</string>
+    <string name="banner_ad_unit_id">ca-app-pub-3331856249448205/4482403202</string>
     <string name="inter_ad_unit_id">ca-app-pub-3331856249448205/1876731601</string>
     <string name="permissions_rationale">We need this to read available networks</string>
     <string name="msg_no_root">No root :(</string>
+    <string name="app_id">ca-app-pub-3331856249448205~6446532006</string>
 </resources>

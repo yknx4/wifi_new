@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
+import android.support.v4.*;
+import android.support.v4.BuildConfig;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,6 +22,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.NativeExpressAdView;
@@ -90,18 +93,13 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getMarshmallowPermissions();
-        MobileAds.initialize(getApplicationContext(), "ca-app-pub-3331856249448205~6446532006");
+        MobileAds.initialize(getApplicationContext(), getString(R.string.app_id));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         loadAdsWithPermissions();
         checkForCrashes();
-
-
-
-//        RootManager rm = RootManager.getInstance();
-//        rm.obtainPermission();
 
     }
 
@@ -154,22 +152,42 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
 
     }
 
+    public boolean willShowIntersitial() {
+        return BuildConfig.DEBUG || Math.random() > .65;
+    }
+
     public void showIntersitial(){
-        if(mInterstitialAd!=null && mInterstitialAd.isLoaded()){
-            if (Math.random() > .7) mInterstitialAd.show();
+        if(mInterstitialAd!=null && mInterstitialAd.isLoaded() && willShowIntersitial()){
+            mInterstitialAd.show();
         }
 
     }
 
     private void setUpAds() {
-        NativeExpressAdView adView = (NativeExpressAdView) findViewById(R.id.adView);
+        final AdView adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
                 .addTestDevice(Constants.DEVICE_HASH)
                 .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
                 .build();
         adView.loadAd(adRequest);
+
+        adView.setAdListener(new AdListener() {
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                adView.setVisibility(View.VISIBLE);
+            }
+
+            @Override
+            public void onAdFailedToLoad(int i) {
+                super.onAdFailedToLoad(i);
+                adView.setVisibility(View.      GONE);
+            }
+
+        });
+
         mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId("ca-app-pub-3331856249448205/1876731601");
+        mInterstitialAd.setAdUnitId(getString(R.string.inter_ad_unit_id));
 
         mInterstitialAd.setAdListener(new AdListener() {
             @Override

@@ -22,6 +22,7 @@ allprojects {
         maven {
             url  "http://jcenter.bintray.com"
         }
+        maven { url "https://jitpack.io" }
         jcenter()
         flatDir {
             dirs 'libs'
