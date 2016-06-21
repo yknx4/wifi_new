@@ -60,7 +60,7 @@ public class WifiController {
 //                Result r = rm.runCommand("cp " + dir + file + " " + getContext().getFilesDir().getAbsolutePath() + dir);
 //                rm.runCommand("chmod -R 666 " + getContext().getFilesDir().getAbsolutePath() + dir + file);
                     Shell.Result r = RootFW.execute("cat " + dir + file);
-                    if (r.wasSuccessful()) {
+                    if (r != null && r.wasSuccessful()) {
                         String data = r.getString();
                         Log.v(TAG, data);
                         parseFile(data);
