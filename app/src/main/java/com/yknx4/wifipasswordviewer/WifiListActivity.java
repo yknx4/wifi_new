@@ -79,9 +79,7 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
 
             }
         };
-        mRecyclerView = (RecyclerView) findViewById(R.id.rv_wifi);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mRecyclerView.setClickable(true);
+
         task.execute(this);
 
 
@@ -96,6 +94,9 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
         setContentView(R.layout.activity_wifi_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        mRecyclerView = (RecyclerView) findViewById(R.id.rv_wifi);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setClickable(true);
         loadAdsWithPermissions();
         checkForCrashes();
 
