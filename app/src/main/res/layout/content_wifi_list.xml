@@ -31,18 +31,14 @@
         tools:listitem="@layout/wifi_item"
         android:id="@+id/rv_wifi"
 
-        android:layout_above="@+id/adView" />
-    <com.google.android.gms.ads.AdView
-        android:id="@+id/adView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_above="@+id/banner"
+        android:layout_alignParentBottom="false" />
+    <com.mobfox.sdk.bannerads.Banner
+        android:layout_width="@dimen/banner_width"
+        android:layout_height="@dimen/banner_heigth"
+        android:id="@+id/banner"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:minHeight="50dp"
-        android:minWidth="320dp"
-        ads:adSize="SMART_BANNER"
-        ads:adUnitId="@string/banner_ad_unit_id">
-    </com.google.android.gms.ads.AdView>
-
-
+        android:layout_centerVertical="true">
+    </com.mobfox.sdk.bannerads.Banner>
 </RelativeLayout>

@@ -1,15 +1,13 @@
 package com.yknx4.wifipasswordviewer;
 
-import android.*;
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.annotation.NonNull;
-import android.support.v4.*;
-import android.support.v4.BuildConfig;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -20,12 +18,11 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
-import com.google.android.gms.ads.InterstitialAd;
-import com.google.android.gms.ads.MobileAds;
-import com.google.android.gms.ads.NativeExpressAdView;
+
+import com.mobfox.sdk.bannerads.Banner;
+import com.mobfox.sdk.bannerads.BannerListener;
+import com.mobfox.sdk.interstitialads.InterstitialAd;
+import com.mobfox.sdk.interstitialads.InterstitialAdListener;
 
 import net.hockeyapp.android.CrashManager;
 import net.hockeyapp.android.UpdateManager;
@@ -42,12 +39,15 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     WifiController mWifis;
     private RecyclerView mRecyclerView;
     private WifiItemAdapter adapter;
-    InterstitialAd mInterstitialAd;
+    InterstitialAd interstitial;
+    private Banner banner;
 
 
     @Override
     protected void onResume() {
         super.onResume();
+        interstitial.onResume();
+        banner.onResume();
 
         AsyncTask<Context,Void,WifiController> task = new AsyncTask<Context,Void,WifiController>(){
             @Override
@@ -72,7 +72,6 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
                         t.setVisibility(View.GONE);
                         t.setText(R.string.msg_no_root);
                         Toast.makeText(WifiListActivity.this, "You don't have root or denied the access.", Toast.LENGTH_SHORT).show();
-                        showIntersitial();
                     }
                 }
 
@@ -81,6 +80,7 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
         };
 
         task.execute(this);
+        showIntersitial();
 
 
 
@@ -89,7 +89,6 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getMarshmallowPermissions();
-        MobileAds.initialize(getApplicationContext(), getString(R.string.app_id));
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_wifi_list);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -143,6 +142,8 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     protected void onPause() {
         super.onPause();
         unregisterManagers();
+        interstitial.onPause();
+        banner.onPause();
     }
 
     @Override
@@ -152,67 +153,74 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     }
 
     public boolean willShowIntersitial() {
-        return BuildConfig.DEBUG || Math.random() > .65;
+        return Math.random() >= .5;
     }
 
     public void showIntersitial(){
-        if(mInterstitialAd!=null && mInterstitialAd.isLoaded() && willShowIntersitial()){
-            mInterstitialAd.show();
+        if(interstitial !=null && willShowIntersitial()){
+            requestNewInterstitial();
         }
 
     }
 
     private void setUpAds() {
-        final AdView adView = (AdView) findViewById(R.id.adView);
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.DEVICE_HASH)
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice(getString(R.string.TABLET_TEST))
-                .build();
-        adView.loadAd(adRequest);
+        banner = (Banner) findViewById(R.id.banner);
 
-        adView.setAdListener(new AdListener() {
+        final Activity self = this;
+        banner.setListener(new BannerListener() {
             @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
+            public void onBannerError(View banner, Exception e) {
             }
-
             @Override
-            public void onAdFailedToLoad(int i) {
-                super.onAdFailedToLoad(i);
-                adView.setVisibility(View.GONE);
+            public void onBannerLoaded(View banner) {
             }
-
+            @Override
+            public void onBannerClosed(View banner) {
+            }
+            @Override
+            public void onBannerFinished() {
+            }
+            @Override
+            public void onBannerClicked(View banner) {
+            }
+            @Override
+            public void onNoFill(View banner) {
+            }
         });
+        banner.setInventoryHash(getString(R.string.mobfox_inventory_hash));
+        banner.load();
 
-        mInterstitialAd = new InterstitialAd(this);
-        mInterstitialAd.setAdUnitId(getString(R.string.inter_ad_unit_id));
+        interstitial = new InterstitialAd(this);
 
-        mInterstitialAd.setAdListener(new AdListener() {
+        InterstitialAdListener listener = new InterstitialAdListener() {
             @Override
-            public void onAdClosed() {
-                requestNewInterstitial();
+            public void onInterstitialLoaded(InterstitialAd interstitial) {
+                //call show() to display the interstitial when its finished loading
+                interstitial.show();
             }
-
             @Override
-            public void onAdLoaded() {
-
+            public void onInterstitialFailed(InterstitialAd interstitial, Exception e) {
             }
-
-
-        });
-
-        requestNewInterstitial();
+            @Override
+            public void onInterstitialClosed(InterstitialAd interstitial) {
+            }
+            @Override
+            public void onInterstitialFinished() {
+            }
+            @Override
+            public void onInterstitialClicked(InterstitialAd interstitial) {
+            }
+            @Override
+            public void onInterstitialShown(InterstitialAd interstitial) {
+            }
+        };
+        interstitial.setListener(listener);
+        interstitial.setInventoryHash(getString(R.string.mobfox_inventory_hash));
 
     }
 
     private void requestNewInterstitial() {
-        AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(Constants.DEVICE_HASH)
-                .addTestDevice(getString(R.string.TABLET_TEST))
-                .build();
-
-        mInterstitialAd.loadAd(adRequest);
+        interstitial.load();
     }
 
     @AfterPermissionGranted(INTERNET_AND_STORAGE)
@@ -228,12 +236,12 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
         if (EasyPermissions.hasPermissions(this, perms)) {
             // Already have permission, do the thing
             // ...
-            setUpAds();
         } else {
             // Do not have permissions, request them now
             EasyPermissions.requestPermissions(this, getString(R.string.permissions_rationale),
                     INTERNET_AND_STORAGE, perms);
         }
+        setUpAds();
     }
 
     @Override
@@ -242,6 +250,8 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
 
         // Forward results to EasyPermissions
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+        interstitial.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        banner.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     @Override
@@ -253,4 +263,6 @@ public class WifiListActivity extends AppCompatActivity implements EasyPermissio
     public void onPermissionsDenied(int requestCode, List<String> perms) {
 
     }
+
+
 }

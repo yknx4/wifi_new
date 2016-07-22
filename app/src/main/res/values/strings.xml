@@ -12,4 +12,6 @@
     <string name="msg_no_root">No root :(</string>
     <string name="app_id">ca-app-pub-3331856249448205~6446532006</string>
     <string name="TABLET_TEST">30AF4716A9AC570304F143963AFEE6BD</string>
+    <string name="mobfox_inventory_hash">95001a958a4a8a40fb94e9d75978f2dd</string>
+    <string name="facebook_app_id">283222795365529</string>
 </resources>
