@@ -8,8 +8,8 @@ android {
         applicationId "com.yknx.wifipasswordviewer"
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 9
-        versionName "1.1.7"
+        versionCode 10
+        versionName "1.1.8"
         manifestPlaceholders = [HOCKEYAPP_APP_ID: "f759785cf6dd444f926db82ce3c3345d"]
         multiDexEnabled true
 
